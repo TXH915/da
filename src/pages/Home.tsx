@@ -2,7 +2,8 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useStore } from '@/store';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { Book, Code, BarChart2, Award, ArrowRight, ChevronRight } from 'lucide-react';
+import { Book, Code, BarChart2, Award, ArrowRight, ChevronRight, FileText } from 'lucide-react';
+import { projects } from '@/data/projects';
 
 const Home: React.FC = () => {
   const { user, courses, fetchCourses, isLoading } = useStore();
@@ -193,6 +194,40 @@ const Home: React.FC = () => {
           </div>
         </section>
       )}
+
+      {/* Data Projects */}
+      <section>
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-2xl font-bold text-gray-800">数据项目实战</h2>
+          <Link to="/practice" className="text-indigo-600 font-medium hover:underline flex items-center">
+            查看全部
+            <ChevronRight className="ml-1 h-4 w-4" />
+          </Link>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {projects.slice(0, 3).map((project) => (
+            <Link
+              key={project.id}
+              to={`/projects/${project.id}`}
+              className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition duration-300 border border-gray-100"
+            >
+              <div className="p-6">
+                <div className="text-indigo-600 mb-4">
+                  <FileText className="h-8 w-8" />
+                </div>
+                <h3 className="text-lg font-semibold mb-2">{project.title}</h3>
+                <p className="text-gray-500 text-sm mb-4 line-clamp-2">{project.description}</p>
+                <div className="flex justify-between items-center">
+                  <span className={`px-2 py-1 rounded text-xs font-medium ${project.difficulty === 'beginner' ? 'bg-green-100 text-green-800' : project.difficulty === 'intermediate' ? 'bg-yellow-100 text-yellow-800' : 'bg-red-100 text-red-800'}`}>
+                    {project.difficulty === 'beginner' ? '初级' : project.difficulty === 'intermediate' ? '中级' : '高级'}
+                  </span>
+                  <span className="text-gray-500 text-sm">{project.tasks.length} 个任务</span>
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
     </div>
   );
 };

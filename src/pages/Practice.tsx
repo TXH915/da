@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Code, FileText, BarChart2, Clock, Award, ChevronRight, PlayCircle, Lock } from 'lucide-react';
+import { projects } from '@/data/projects';
 
 const Practice: React.FC = () => {
   const [activeTab, setActiveTab] = useState('exercises');
@@ -21,12 +22,12 @@ const Practice: React.FC = () => {
     { id: 3, title: '数据可视化挑战', difficulty: '困难', points: 30, timeLimit: '45分钟' },
   ];
 
-  // 模拟数据分析项目
-  const projects = [
-    { id: 1, title: '销售数据分析', description: '分析销售数据，识别销售趋势和客户行为', difficulty: '中等' },
-    { id: 2, title: '市场调研分析', description: '分析市场调研数据，为产品决策提供依据', difficulty: '困难' },
-    { id: 3, title: '客户细分分析', description: '使用聚类算法对客户进行细分', difficulty: '困难' },
-  ];
+  // 从projects.ts导入实际项目数据
+  // const projects = [
+  //   { id: 1, title: '销售数据分析', description: '分析销售数据，识别销售趋势和客户行为', difficulty: '中等' },
+  //   { id: 2, title: '市场调研分析', description: '分析市场调研数据，为产品决策提供依据', difficulty: '困难' },
+  //   { id: 3, title: '客户细分分析', description: '使用聚类算法对客户进行细分', difficulty: '困难' },
+  // ];
 
   return (
     <div className="space-y-6">
@@ -171,29 +172,33 @@ const Practice: React.FC = () => {
           {activeTab === 'projects' && (
             <div className="space-y-4">
               {projects.map((project) => (
-                <div
+                <Link
                   key={project.id}
-                  className="bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden hover:shadow-md transition duration-200"
+                  to={`/projects/${project.id}`}
+                  className="bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden hover:shadow-md transition duration-200 block"
                 >
                   <div className="p-6">
                     <div className="flex justify-between items-start mb-4">
                       <h3 className="font-semibold">{project.title}</h3>
                       <span className={`px-2 py-1 rounded text-xs font-medium ${
-                        project.difficulty === '简单'
+                        project.difficulty === 'beginner'
                           ? 'bg-green-100 text-green-800'
-                          : project.difficulty === '中等'
+                          : project.difficulty === 'intermediate'
                           ? 'bg-yellow-100 text-yellow-800'
                           : 'bg-red-100 text-red-800'
                       }`}>
-                        {project.difficulty}
+                        {project.difficulty === 'beginner' ? '初级' : project.difficulty === 'intermediate' ? '中级' : '高级'}
                       </span>
                     </div>
                     <p className="text-gray-600 mb-6">{project.description}</p>
-                    <button className="px-4 py-2 bg-indigo-600 text-white rounded-md font-medium hover:bg-indigo-700 transition duration-200">
-                      开始项目
-                    </button>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-gray-500">{project.tasks.length} 个任务</span>
+                      <button className="px-4 py-2 bg-indigo-600 text-white rounded-md font-medium hover:bg-indigo-700 transition duration-200">
+                        开始项目
+                      </button>
+                    </div>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           )}

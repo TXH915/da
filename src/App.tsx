@@ -6,6 +6,7 @@ import Courses from "@/pages/Courses";
 import CourseDetail from "@/pages/Courses/CourseDetail";
 import Practice from "@/pages/Practice";
 import Achievements from "@/pages/Achievements";
+import ProjectDetail from "@/pages/ProjectDetail";
 import Login from "@/pages/Auth/Login";
 import Register from "@/pages/Auth/Register";
 
@@ -20,6 +21,7 @@ export default function App() {
           <Route path="/courses/:id" element={<CourseDetail />} />
           <Route path="/practice" element={<Practice />} />
           <Route path="/achievements" element={<Achievements />} />
+          <Route path="/projects/:id" element={<ProjectDetail />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Routes>
