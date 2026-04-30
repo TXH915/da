@@ -9,6 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js"></script>
     <style>
         :root {
             --bg-primary: #0d1117;
@@ -2111,8 +2112,24 @@ let progress = JSON.parse(localStorage.getItem('datamind_progress')) || {
     codeRuns: 0
 };
 
+let pyodide = null;
+let pyodideReady = false;
 let currentProject = null;
 let currentTab = 'theory';
+
+async function initPyodide() {
+    try {
+        pyodide = await loadPyodide();
+        await pyodide.loadPackage(['pandas', 'numpy', 'scipy', 'matplotlib', 'scikit-learn']);
+        pyodideReady = true;
+        console.log('Pyodide 已加载完成');
+    } catch (error) {
+        console.error('Pyodide 加载失败:', error);
+        pyodideReady = false;
+    }
+}
+
+initPyodide();
 
 function saveProgress() {
     localStorage.setItem('datamind_progress', JSON.stringify(progress));
@@ -2284,28 +2301,51 @@ function runCode() {
     progress.codeRuns++;
     saveProgress();
     
-    output.innerHTML = '<span style="color: var(--accent-tertiary);">⚠️ 注意: 这是一个Python代码练习环境</span>\n\n由于浏览器限制，无法直接执行Python代码。\n\n您可以：\n1. 将代码复制到本地Python环境运行\n2. 使用在线Python编译器（如 https://www.programiz.com/python-programming/online-compiler/）\n3. 参考"参考答案"标签页查看完整解答\n\n--- 示例输出 ---\n' + simulatePythonOutput(code);
+    if (!pyodideReady) {
+        output.innerHTML = '<span style="color: var(--accent-tertiary);">⏳ Python环境正在加载中，请稍候...</span>';
+        output.classList.remove('error');
+        
+        const checkReady = setInterval(() => {
+            if (pyodideReady) {
+                clearInterval(checkReady);
+                runCode();
+            }
+        }, 1000);
+        return;
+    }
+    
+    output.innerHTML = '<span style="color: var(--accent-tertiary);">🔄 正在执行代码...</span>';
     output.classList.remove('error');
+    
+    setTimeout(async () => {
+        try {
+            pyodide.globals.get('print').capture(true);
+            
+            const results = await pyodide.runPythonAsync(code);
+            
+            let capturedOutput = pyodide.globals.get('print').restore();
+            pyodide.globals.get('print').restore()();
+            
+            const outputText = capturedOutput || (results !== undefined ? String(results) : '');
+            
+            if (outputText.trim()) {
+                output.innerHTML = `<pre style="white-space: pre-wrap; word-break: break-all;">${escapeHtml(outputText)}</pre>`;
+            } else {
+                output.innerHTML = '<span style="color: var(--accent-secondary);">✅ 代码执行完成（无输出）</span>';
+            }
+            output.classList.remove('error');
+            
+        } catch (error) {
+            output.innerHTML = `<span style="color: var(--accent-red);">❌ 执行错误:</span>\n<pre style="color: var(--accent-red); white-space: pre-wrap;">${escapeHtml(error.message)}</pre>`;
+            output.classList.add('error');
+        }
+    }, 100);
 }
 
-function simulatePythonOutput(code) {
-    const outputs = [];
-    
-    if (code.includes('print(')) {
-        const printMatches = code.match(/print\([^)]+\)/g);
-        if (printMatches) {
-            outputs.push('='.repeat(50));
-            printMatches.forEach(m => {
-                outputs.push(`>>> ${m}\n执行成功`);
-            });
-        }
-    }
-    
-    if (outputs.length === 0) {
-        outputs.push('代码执行完成（无输出）');
-    }
-    
-    return outputs.join('\n');
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
 }
 
 function resetCode() {
