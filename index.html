@@ -204,42 +204,67 @@
         .progress-text { font-size: 13px; color: var(--text-secondary); }
 
         .project-detail { display: flex; min-height: calc(100vh - 70px); }
-        .project-sidebar { width: 400px; background: var(--bg-primary); border-right: 1px solid var(--border-color); padding: 24px; overflow-y: auto; flex-shrink: 0; }
-        .back-btn { display: flex; align-items: center; gap: 8px; color: var(--text-secondary); cursor: pointer; margin-bottom: 24px; transition: var(--transition-smooth); background: none; border: none; font-size: 16px; font-family: inherit; }
-        .back-btn:hover { color: var(--accent-primary); }
-        .project-info { margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid var(--border-color); }
-        .project-info h1 { font-size: 24px; margin-bottom: 8px; color: var(--text-primary); }
-        .project-info p { color: var(--text-secondary); line-height: 1.5; margin-bottom: 12px; font-size: 14px; }
+        .project-sidebar { width: 50%; background: linear-gradient(135deg, #f8fafc, #edf2f7); border-right: 1px solid var(--border-color); padding: 24px; overflow-y: auto; flex-shrink: 0; }
+        .back-btn { display: flex; align-items: center; gap: 8px; color: var(--text-secondary); cursor: pointer; margin-bottom: 24px; transition: var(--transition-smooth); background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 8px; padding: 8px 16px; font-size: 16px; font-family: inherit; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .back-btn:hover { color: var(--accent-primary); border-color: var(--accent-primary); }
+        .project-info { margin-bottom: 24px; padding-bottom: 24px; }
+        .project-info h1 { font-size: 28px; margin-bottom: 8px; color: var(--text-primary); }
+        .project-info p { color: var(--text-secondary); line-height: 1.5; margin-bottom: 12px; font-size: 15px; }
         .project-badges { display: flex; gap: 8px; }
-        .project-badge { padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; }
-        .project-badge.level-basic { background: rgba(59, 130, 246, 0.1); color: var(--accent-primary); }
-        .project-badge.level-intermediate { background: rgba(34, 197, 94, 0.1); color: var(--accent-secondary); }
-        .project-badge.level-advanced { background: rgba(139, 92, 246, 0.1); color: var(--accent-purple); }
-        .project-badge.time { background: var(--bg-tertiary); color: var(--text-secondary); }
-        .module-list { display: flex; flex-direction: column; gap: 12px; }
-        .module-item { display: flex; align-items: center; gap: 14px; padding: 16px; background: var(--bg-secondary); border-radius: 12px; cursor: pointer; transition: var(--transition-smooth); border: 1px solid transparent; position: relative; }
-        .module-item:hover { transform: translateX(4px); }
-        .module-item.active { border-color: var(--accent-primary); }
-        .module-item.completed { opacity: 0.7; }
-        .module-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
-        .module-item .module-icon { background: linear-gradient(135deg, var(--accent-primary), #60a5fa); }
-        .module-item:nth-child(2) .module-icon { background: linear-gradient(135deg, var(--accent-purple), #a78bfa); }
-        .module-item:nth-child(3) .module-icon { background: linear-gradient(135deg, var(--accent-secondary), #4ade80); }
-        .module-item:nth-child(4) .module-icon { background: linear-gradient(135deg, var(--accent-tertiary), #fbbf24); }
-        .module-item:nth-child(5) .module-icon { background: linear-gradient(135deg, var(--accent-pink), #f472b6); }
-        .module-item.active .module-icon { transform: scale(1.1); }
-        .module-info { flex: 1; }
-        .module-info h4 { font-size: 15px; font-weight: 600; color: var(--text-primary); margin-bottom: 3px; }
-        .module-info p { font-size: 13px; color: var(--text-secondary); }
-        .module-expand { width: 24px; height: 24px; border-radius: 50%; background: var(--bg-tertiary); display: flex; align-items: center; justify-content: center; color: var(--text-secondary); font-size: 12px; flex-shrink: 0; }
-        .module-item.active .module-expand { background: var(--accent-primary); color: white; }
-
-        .project-main { flex: 1; display: flex; flex-direction: column; overflow: hidden; background: var(--bg-secondary); }
-        .module-tabs { display: flex; background: var(--bg-primary); border-bottom: 1px solid var(--border-color); padding: 0 24px; }
-        .module-tab { padding: 16px 24px; color: var(--text-secondary); cursor: pointer; transition: var(--transition-smooth); border-bottom: 3px solid transparent; font-weight: 500; background: none; border-left: none; border-right: none; border-top: none; font-size: 15px; font-family: inherit; }
-        .module-tab:hover { color: var(--text-primary); }
-        .module-tab.active { color: var(--accent-primary); border-bottom-color: var(--accent-primary); }
-        .module-content { flex: 1; overflow-y: auto; padding: 30px; }
+        .project-badge { padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; }
+        .project-badge.level-basic { background: rgba(59, 130, 246, 0.1); color: var(--accent-primary); border: 1px solid rgba(59,130,246,0.2); }
+        .project-badge.level-intermediate { background: rgba(34, 197, 94, 0.1); color: var(--accent-secondary); border: 1px solid rgba(34,197,94,0.2); }
+        .project-badge.level-advanced { background: rgba(139, 92, 246, 0.1); color: var(--accent-purple); border: 1px solid rgba(139,92,246,0.2); }
+        .project-badge.time { background: var(--bg-primary); color: var(--text-secondary); border: 1px solid var(--border-color); }
+        .theory-section { background: var(--bg-primary); border-radius: 16px; padding: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+        .theory-card { background: linear-gradient(135deg, #3b82f6, #8b5cf6); color: white; padding: 20px; border-radius: 12px; margin-bottom: 20px; }
+        .theory-card h3 { color: white; font-size: 20px; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
+        .theory-card p { color: rgba(255,255,255,0.9); }
+        .theory-chapter { margin-bottom: 16px; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .theory-chapter h4 { font-size: 18px; font-weight: 600; color: white; margin: 0; padding: 16px 20px; background: linear-gradient(135deg, #10b981, #0d9488); display: flex; align-items: center; gap: 12px; }
+        .theory-chapter h4 svg { width: 24px; height: 24px; }
+        .theory-chapter:nth-child(2) h4 { background: linear-gradient(135deg, #60a5fa, #7c3aed); }
+        .theory-chapter:nth-child(3) h4 { background: linear-gradient(135deg, #34d399, #10b981); }
+        .theory-chapter:nth-child(4) h4 { background: linear-gradient(135deg, #fbbf24, #f97316); }
+        .theory-chapter:nth-child(5) h4 { background: linear-gradient(135deg, #f472b6, #ec4899); }
+        .theory-chapter-content { padding: 20px; background: white; }
+        .theory-chapter-content p { margin-bottom: 12px; line-height: 1.7; }
+        .theory-chapter-content ul { padding-left: 20px; margin-bottom: 12px; }
+        .theory-chapter-content li { margin-bottom: 8px; line-height: 1.7; }
+        .theory-chapter-content pre { background: #1e1e1e; border-radius: 10px; padding: 16px; overflow-x: auto; margin-top: 12px; }
+        .theory-chapter-content code { color: #d4d4d4; font-size: 13px; }
+        .theory-chapter-content .concept-box { background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.2); border-radius: 12px; padding: 16px; margin: 16px 0; }
+        .theory-chapter-content .tip-box { background: rgba(34,197,94,0.1); border-left: 4px solid var(--accent-secondary); padding: 16px 20px; border-radius: 0 12px 12px 0; margin: 16px 0; }
+        
+        .project-main { width: 50%; display: flex; flex-direction: column; overflow: hidden; background: var(--bg-secondary); }
+        .code-header-bar { display: flex; justify-content: space-between; align-items: center; background: linear-gradient(135deg, #f8fafc, #e2e8f0); padding: 16px 24px; border-bottom: 1px solid var(--border-color); }
+        .code-header-title { font-size: 18px; font-weight: 600; color: var(--text-primary); display: flex; align-items: center; gap: 10px; }
+        .code-actions { display: flex; gap: 12px; }
+        .code-btn { padding: 12px 24px; border-radius: 12px; font-size: 14px; font-weight: 600; cursor: pointer; transition: var(--transition-smooth); display: flex; align-items: center; gap: 8px; border: 1px solid var(--border-color); background: white; color: var(--text-primary); box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .code-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .code-btn.primary { background: linear-gradient(135deg, var(--accent-primary), #2563eb); color: white; border-color: transparent; box-shadow: 0 4px 12px rgba(59,130,246,0.3); }
+        .code-btn.primary:hover { background: linear-gradient(135deg, #2563eb, #1d4ed8); }
+        .code-btn.quiz { background: linear-gradient(135deg, var(--accent-purple), #ec4899); color: white; border-color: transparent; box-shadow: 0 4px 12px rgba(139,92,246,0.3); }
+        .code-btn.quiz:hover { background: linear-gradient(135deg, #7c3aed, #db2777); }
+        .code-btn.answer { background: var(--bg-primary); color: var(--text-secondary); }
+        
+        .editor-container { flex: 1; display: flex; flex-direction: column; background: #1e1e1e; border-radius: 0; overflow: hidden; }
+        .editor-toolbar { display: flex; align-items: center; gap: 8px; padding: 16px 24px; background: #252526; border-bottom: 1px solid #3c3c3c; }
+        .editor-dot { width: 12px; height: 12px; border-radius: 50%; }
+        .editor-dot.red { background: #ff5f56; }
+        .editor-dot.yellow { background: #ffbd2e; }
+        .editor-dot.green { background: #27ca40; }
+        .editor-filename { margin-left: 12px; color: #cccccc; font-size: 14px; font-family: 'JetBrains Mono', monospace; font-weight: 500; }
+        .code-editor { flex: 1; padding: 20px 24px; font-family: 'JetBrains Mono', monospace; font-size: 14px; line-height: 1.6; background: #1e1e1e; color: #d4d4d4; border: none; resize: none; outline: none; min-height: 350px; }
+        .output-section { border-top: 1px solid #3c3c3c; background: #121212; max-height: 250px; overflow-y: auto; }
+        .output-header { display: flex; justify-content: space-between; align-items: center; padding: 12px 24px; background: #1e1e1e; border-bottom: 1px solid #3c3c3c; }
+        .output-header h4 { font-size: 14px; color: #8b949e; font-weight: 600; margin: 0; display: flex; align-items: center; gap: 8px; }
+        .output-content { padding: 20px 24px; font-family: 'JetBrains Mono', monospace; font-size: 13px; line-height: 1.5; color: #4ade80; white-space: pre-wrap; }
+        .output-content.error { color: #f87171; }
+        .output-placeholder { color: #6a6a6a; font-style: italic; }
+        
+        /* 隐藏旧的标签页，保持兼容性 */
+        .module-tabs { display: none; }
 
         .theory-panel { max-width: 900px; }
         .theory-panel h2 { font-size: 32px; margin-bottom: 24px; color: var(--accent-primary); }
@@ -448,20 +473,57 @@
 
         <div class="page" id="page-project">
             <div class="project-detail">
+                <!-- 左侧：理论知识 -->
                 <aside class="project-sidebar">
-                    <button class="back-btn" onclick="navigateTo('courses')"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>返回课程</button>
+                    <button class="back-btn" onclick="navigateTo('courses')"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>返回</button>
                     <div class="project-info" id="projectInfo"></div>
-                    <h3 style="margin-bottom: 16px; font-size: 16px;">学习模块</h3>
-                    <div class="module-list" id="moduleList"></div>
+                    <div class="theory-section" id="theoryContent"></div>
                 </aside>
+                
+                <!-- 右侧：代码编辑器 -->
                 <div class="project-main">
-                    <div class="module-tabs">
-                        <button class="module-tab active" data-tab="theory" onclick="switchTab('theory')">📖 概念理论</button>
-                        <button class="module-tab" data-tab="practice" onclick="switchTab('practice')">💻 代码实践</button>
-                        <button class="module-tab" data-tab="answer" onclick="switchTab('answer')">✅ 参考答案</button>
-                        <button class="module-tab" data-tab="quiz" onclick="switchTab('quiz')">📝 随堂测验</button>
+                    <div class="code-header-bar">
+                        <div class="code-header-title">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="#3b82f6"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                            01-cleaning/main.py
+                        </div>
+                        <div class="code-actions">
+                            <button class="code-btn primary" onclick="runCode()">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                                运行代码
+                            </button>
+                            <button class="code-btn" onclick="resetCode()">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
+                                重置代码
+                            </button>
+                            <button class="code-btn answer" onclick="showAnswer()">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75L17 11c0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75L22 7c-2.76 0-5-2.24-5-5C13.4 2 12.79 1.87 12.22 1.64l-2.92 2.92C11.26 2.13 10.65 2 10 2c-2.76 0-5 2.24-5 5 0 .65.13 1.26.36 1.83l-2.92 2.92C.74 14.26-.12 15.89-.85 17.75L7 13c0 .65.13 1.26.36 1.83l-2.92 2.92C4.74 14.26 5.6 15.89 6.33 17.75L12 7zM12 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                                显示参考答案
+                            </button>
+                            <button class="code-btn quiz" onclick="showQuiz()">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+                                开始测试
+                            </button>
+                        </div>
                     </div>
-                    <div class="module-content" id="moduleContent"></div>
+                    <div class="editor-container">
+                        <div class="editor-toolbar">
+                            <div class="editor-dot red"></div>
+                            <div class="editor-dot yellow"></div>
+                            <div class="editor-dot green"></div>
+                            <span class="editor-filename">main.py</span>
+                        </div>
+                        <textarea class="code-editor" id="codeEditor" placeholder="# 开始编写你的代码..."></textarea>
+                        <div class="output-section">
+                            <div class="output-header">
+                                <h4>
+                                    <svg viewBox="0 0 24 24" width="18" height="18" fill="#4ade80"><path d="M20 6H4V2h16v4zm0 16H4v-4h16v4zM4 10h4v4H4v-4zm6 0h10v4H10v-4z"/></svg>
+                                    执行结果
+                                </h4>
+                            </div>
+                            <div class="output-content" id="outputContent"><span class="output-placeholder">点击"运行代码"查看输出...</span></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -2277,7 +2339,8 @@ function openProject(projectId) {
     
     navigateTo('project');
     renderProjectInfo();
-    switchTab('theory');
+    renderTheoryContent();
+    document.getElementById('codeEditor').value = currentProject.practice.starterCode;
     
     if (!progress.codeRuns) {
         unlockAchievement('first_code');
@@ -2296,30 +2359,152 @@ function renderProjectInfo() {
         </div>
     `;
     document.getElementById('projectInfo').innerHTML = infoHTML;
-    
-    const moduleHTML = `
-        <div class="module-item active" onclick="switchTab('theory')">
-            <div class="module-icon">📖</div>
-            <div class="module-info"><h4>概念理论</h4><p>学习核心知识点</p></div>
-            <div class="module-expand">+</div>
+}
+
+function renderTheoryContent() {
+    // 先把理论内容用卡片式结构包装
+    const theoryHTML = `
+        <div class="theory-card">
+            <h3>
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="white"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                数据清洗全流程概述
+            </h3>
+            <p>掌握Pandas数据清洗的核心技能，包括处理缺失值、重复值、异常值等关键步骤。</p>
         </div>
-        <div class="module-item" onclick="switchTab('practice')">
-            <div class="module-icon">💻</div>
-            <div class="module-info"><h4>代码实践</h4><p>动手编写代码</p></div>
-            <div class="module-expand">+</div>
+        
+        <div class="theory-chapter">
+            <h4>
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="white"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+                一、数据清洗前的准备
+            </h4>
+            <div class="theory-chapter-content">
+                <p><strong>1.1 导入必要工具库</strong></p>
+                <p>学习导入Pandas和NumPy库，这是数据分析的基础工具。</p>
+                <pre><code class="language-python">import pandas as pd
+import numpy as np
+from sklearn.preprocessing import StandardScaler, MinMaxScaler</code></pre>
+                <p><strong>1.2 读取原始数据</strong></p>
+                <p>使用 pd.read_csv() 读取CSV文件，了解数据的基本结构。</p>
+                <pre><code class="language-python"># 读取CSV文件
+df = pd.read_csv('data.csv')
+# 查看数据基本信息
+print("数据形状:", df.shape)
+print("\\n数据类型:\\n", df.dtypes)
+print("\\n前5行数据:\\n", df.head())</code></pre>
+            </div>
         </div>
-        <div class="module-item" onclick="switchTab('answer')">
-            <div class="module-icon">✅</div>
-            <div class="module-info"><h4>参考答案</h4><p>查看完整解答</p></div>
-            <div class="module-expand">+</div>
+        
+        <div class="theory-chapter">
+            <h4>
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="white"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+                二、什么是数据清洗？
+            </h4>
+            <div class="theory-chapter-content">
+                <div class="concept-box">
+                    <h4 style="color: #3b82f6; margin: 0 0 10px 0;">💡 核心概念</h4>
+                    <p style="margin: 0;">数据清洗是数据分析的第一步，解决数据质量问题，确保后续分析的准确性。</p>
+                </div>
+                <p><strong>常见的数据质量问题：</strong></p>
+                <ul>
+                    <li>❌ <strong>缺失值</strong>: 数据记录中某些字段为空</li>
+                    <li>❌ <strong>重复值</strong>: 相同的记录重复出现</li>
+                    <li>❌ <strong>异常值</strong>: 明显偏离正常范围的数据</li>
+                    <li>❌ <strong>格式错误</strong>: 数据类型不正确或格式不统一</li>
+                    <li>❌ <strong>数据不一致</strong>: 同一实体的信息在不同记录中不一致</li>
+                </ul>
+            </div>
         </div>
-        <div class="module-item" onclick="switchTab('quiz')">
-            <div class="module-icon">📝</div>
-            <div class="module-info"><h4>随堂测验</h4><p>检验学习成果</p></div>
-            <div class="module-expand">+</div>
+        
+        <div class="theory-chapter">
+            <h4>
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="white"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                三、缺失值处理
+            </h4>
+            <div class="theory-chapter-content">
+                <p><strong>3.1 缺失值检测</strong></p>
+                <pre><code class="language-python"># 检测每列的缺失值数量
+print("缺失值统计:\\n", df.isnull().sum())
+# 检测缺失值占比
+print("\\n缺失值占比:\\n", df.isnull().sum() / len(df) * 100)</code></pre>
+                <p><strong>3.2 缺失值处理方法</strong></p>
+                <ul>
+                    <li><strong>方法一：删除法</strong> - 适用于缺失比例较低或非关键字段</li>
+                    <li><strong>方法二：填充法</strong> - 适用于缺失比例较高或关键字段</li>
+                    <li><strong>方法三：插值法</strong> - 适用于时间序列数据</li>
+                </ul>
+                <pre><code class="language-python"># 方法1: 删除含有缺失值的行
+df_dropped = df.dropna()
+# 方法2: 删除缺失超过50%的列
+df_clean = df.dropna(thresh=len(df)*0.5, axis=1)
+# 方法3: 用均值填充数值型缺失值
+df['年龄'].fillna(df['年龄'].mean(), inplace=True)
+# 方法4: 用中位数填充（对异常值更稳健）
+df['工资'].fillna(df['工资'].median(), inplace=True)
+# 方法5: 用众数填充类别型数据
+df['性别'].fillna(df['性别'].mode()[0], inplace=True)</code></pre>
+            </div>
+        </div>
+        
+        <div class="theory-chapter">
+            <h4>
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="white"><path d="M1 4.44l11.41 11.42l5.99-5.99l1.41 1.41l-7.4 7.4l-12.82-12.83l1.41-1.41zM18 10l-1.41 1.41l-1.41-1.41l1.41-1.41l1.41 1.41zM22 6l-1.41 1.41l-1.41-1.41l1.41-1.41l1.41 1.41z"/></svg>
+                四、重复值检测与处理
+            </h4>
+            <div class="theory-chapter-content">
+                <p><strong>4.1 检测重复值</strong></p>
+                <pre><code class="language-python"># 检测重复行
+duplicates = df[df.duplicated()]
+print("重复记录数:", len(duplicates))
+# 显示重复记录
+print("\\n重复记录:\\n", duplicates)</code></pre>
+                <p><strong>4.2 删除重复值</strong></p>
+                <pre><code class="language-python"># 删除重复行，保留第一条
+df_unique = df.drop_duplicates(keep='first')
+# 删除重复行，保留最后一条
+df_unique = df.drop_duplicates(keep='last')
+# 基于特定列检测重复
+df.drop_duplicates(subset=['user_id'], keep='first', inplace=True)</code></pre>
+            </div>
+        </div>
+        
+        <div class="theory-chapter">
+            <h4>
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="white"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                五、数据标准化
+            </h4>
+            <div class="theory-chapter-content">
+                <p><strong>5.1 Z-score标准化</strong></p>
+                <p>将数据转换为均值为0，标准差为1的标准正态分布。</p>
+                <pre><code class="language-python"># Z-score标准化
+scaler = StandardScaler()
+df['工资标准化'] = scaler.fit_transform(df[['工资']])</code></pre>
+                <p><strong>5.2 Min-Max归一化</strong></p>
+                <p>将数据缩放到[0, 1]范围内。</p>
+                <pre><code class="language-python"># Min-Max归一化
+scaler = MinMaxScaler()
+df['工资归一化'] = scaler.fit_transform(df[['工资']])</code></pre>
+                <div class="tip-box">
+                    <strong>💡 选择建议：</strong>
+                    <ul style="margin: 10px 0 0 0;">
+                        <li style="margin: 5px 0;">Z-score适合近似正态分布的数据，且算法对尺度敏感时使用</li>
+                        <li style="margin: 5px 0;">Min-Max适合有明确边界的数据，或需要保留数据分布形状时使用</li>
+                    </ul>
+                </div>
+            </div>
         </div>
     `;
-    document.getElementById('moduleList').innerHTML = moduleHTML;
+    document.getElementById('theoryContent').innerHTML = theoryHTML;
+    Prism.highlightAll();
+}
+
+function showAnswer() {
+    // 使用弹窗或其他方式显示参考答案
+    document.getElementById('codeEditor').value = currentProject.referenceAnswer;
+}
+
+function showQuiz() {
+    // 这里可以实现测验的显示和提交逻辑
+    alert('测试功能即将上线！');
 }
 
 function switchTab(tab) {
