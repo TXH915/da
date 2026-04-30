@@ -12,21 +12,21 @@
     <script src="https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js"></script>
     <style>
         :root {
-            --bg-primary: #0d1117;
-            --bg-secondary: #161b22;
-            --bg-tertiary: #21262d;
-            --bg-hover: #30363d;
-            --accent-primary: #58a6ff;
-            --accent-secondary: #7ee787;
-            --accent-tertiary: #d29922;
-            --accent-purple: #a371f7;
-            --accent-pink: #f778ba;
-            --accent-red: #ff7b72;
-            --text-primary: #f0f6fc;
-            --text-secondary: #8b949e;
-            --text-tertiary: #6e7681;
-            --border-color: #30363d;
-            --shadow-glow: 0 0 30px rgba(88, 166, 255, 0.3);
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-tertiary: #f1f5f9;
+            --bg-hover: #e2e8f0;
+            --accent-primary: #3b82f6;
+            --accent-secondary: #22c55e;
+            --accent-tertiary: #f59e0b;
+            --accent-purple: #8b5cf6;
+            --accent-pink: #ec4899;
+            --accent-red: #ef4444;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --text-tertiary: #94a3b8;
+            --border-color: #e2e8f0;
+            --shadow-glow: 0 0 30px rgba(59, 130, 246, 0.2);
             --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -50,8 +50,8 @@
         .bg-grid {
             position: absolute; width: 200%; height: 200%;
             background-image: 
-                linear-gradient(rgba(88, 166, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(88, 166, 255, 0.03) 1px, transparent 1px);
+                linear-gradient(rgba(59, 130, 246, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(59, 130, 246, 0.05) 1px, transparent 1px);
             background-size: 50px 50px;
             transform: perspective(500px) rotateX(60deg) translateY(-100px) translateZ(-200px);
             animation: gridMove 20s linear infinite;
@@ -64,19 +64,20 @@
             position: absolute; width: 4px; height: 4px;
             background: var(--accent-primary); border-radius: 50%;
             box-shadow: 0 0 10px var(--accent-primary);
-            animation: float 8s ease-in-out infinite; opacity: 0.6;
+            animation: float 8s ease-in-out infinite; opacity: 0.4;
         }
         @keyframes float {
-            0%, 100% { transform: translateY(0) translateX(0); opacity: 0.6; }
-            50% { transform: translateY(-30px) translateX(20px); opacity: 1; }
+            0%, 100% { transform: translateY(0) translateX(0); opacity: 0.4; }
+            50% { transform: translateY(-30px) translateX(20px); opacity: 0.8; }
         }
 
         .nav {
             position: fixed; top: 0; left: 0; right: 0; height: 70px;
-            background: rgba(13, 17, 23, 0.8); backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border-color); z-index: 1000;
             display: flex; align-items: center; justify-content: space-between;
             padding: 0 40px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
         }
         .nav-logo {
             display: flex; align-items: center; gap: 12px;
@@ -203,33 +204,42 @@
         .progress-text { font-size: 13px; color: var(--text-secondary); }
 
         .project-detail { display: flex; min-height: calc(100vh - 70px); }
-        .project-sidebar { width: 350px; background: var(--bg-secondary); border-right: 1px solid var(--border-color); padding: 30px; overflow-y: auto; flex-shrink: 0; }
-        .back-btn { display: flex; align-items: center; gap: 8px; color: var(--text-secondary); cursor: pointer; margin-bottom: 30px; transition: var(--transition-smooth); background: none; border: none; font-size: 16px; font-family: inherit; }
+        .project-sidebar { width: 400px; background: var(--bg-primary); border-right: 1px solid var(--border-color); padding: 24px; overflow-y: auto; flex-shrink: 0; }
+        .back-btn { display: flex; align-items: center; gap: 8px; color: var(--text-secondary); cursor: pointer; margin-bottom: 24px; transition: var(--transition-smooth); background: none; border: none; font-size: 16px; font-family: inherit; }
         .back-btn:hover { color: var(--accent-primary); }
-        .project-info { margin-bottom: 30px; }
-        .project-info h1 { font-size: 28px; margin-bottom: 12px; }
-        .project-info p { color: var(--text-secondary); line-height: 1.6; margin-bottom: 20px; }
-        .project-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 30px; }
-        .stat-card { background: var(--bg-tertiary); padding: 15px; border-radius: 12px; text-align: center; }
-        .stat-card .stat-value { font-family: 'Outfit', sans-serif; font-size: 24px; font-weight: 700; color: var(--accent-primary); }
-        .stat-card .stat-label { font-size: 13px; color: var(--text-secondary); margin-top: 4px; }
-        .module-list { display: flex; flex-direction: column; gap: 8px; }
-        .module-item { display: flex; align-items: center; gap: 12px; padding: 14px 18px; background: var(--bg-tertiary); border-radius: 10px; cursor: pointer; transition: var(--transition-smooth); border: 1px solid transparent; }
-        .module-item:hover { border-color: var(--accent-primary); }
-        .module-item.active { background: rgba(88, 166, 255, 0.1); border-color: var(--accent-primary); }
-        .module-item.completed { background: rgba(126, 231, 135, 0.1); }
-        .module-icon { width: 32px; height: 32px; border-radius: 8px; background: var(--bg-hover); display: flex; align-items: center; justify-content: center; font-size: 16px; }
-        .module-item.active .module-icon { background: var(--accent-primary); color: var(--bg-primary); }
-        .module-item.completed .module-icon { background: var(--accent-secondary); color: var(--bg-primary); }
-        .module-info h4 { font-size: 15px; margin-bottom: 2px; }
-        .module-info p { font-size: 13px; color: var(--text-tertiary); }
+        .project-info { margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid var(--border-color); }
+        .project-info h1 { font-size: 24px; margin-bottom: 8px; color: var(--text-primary); }
+        .project-info p { color: var(--text-secondary); line-height: 1.5; margin-bottom: 12px; font-size: 14px; }
+        .project-badges { display: flex; gap: 8px; }
+        .project-badge { padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+        .project-badge.level-basic { background: rgba(59, 130, 246, 0.1); color: var(--accent-primary); }
+        .project-badge.level-intermediate { background: rgba(34, 197, 94, 0.1); color: var(--accent-secondary); }
+        .project-badge.level-advanced { background: rgba(139, 92, 246, 0.1); color: var(--accent-purple); }
+        .project-badge.time { background: var(--bg-tertiary); color: var(--text-secondary); }
+        .module-list { display: flex; flex-direction: column; gap: 12px; }
+        .module-item { display: flex; align-items: center; gap: 14px; padding: 16px; background: var(--bg-secondary); border-radius: 12px; cursor: pointer; transition: var(--transition-smooth); border: 1px solid transparent; position: relative; }
+        .module-item:hover { transform: translateX(4px); }
+        .module-item.active { border-color: var(--accent-primary); }
+        .module-item.completed { opacity: 0.7; }
+        .module-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+        .module-item .module-icon { background: linear-gradient(135deg, var(--accent-primary), #60a5fa); }
+        .module-item:nth-child(2) .module-icon { background: linear-gradient(135deg, var(--accent-purple), #a78bfa); }
+        .module-item:nth-child(3) .module-icon { background: linear-gradient(135deg, var(--accent-secondary), #4ade80); }
+        .module-item:nth-child(4) .module-icon { background: linear-gradient(135deg, var(--accent-tertiary), #fbbf24); }
+        .module-item:nth-child(5) .module-icon { background: linear-gradient(135deg, var(--accent-pink), #f472b6); }
+        .module-item.active .module-icon { transform: scale(1.1); }
+        .module-info { flex: 1; }
+        .module-info h4 { font-size: 15px; font-weight: 600; color: var(--text-primary); margin-bottom: 3px; }
+        .module-info p { font-size: 13px; color: var(--text-secondary); }
+        .module-expand { width: 24px; height: 24px; border-radius: 50%; background: var(--bg-tertiary); display: flex; align-items: center; justify-content: center; color: var(--text-secondary); font-size: 12px; flex-shrink: 0; }
+        .module-item.active .module-expand { background: var(--accent-primary); color: white; }
 
-        .project-main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
-        .module-tabs { display: flex; background: var(--bg-secondary); border-bottom: 1px solid var(--border-color); padding: 0 30px; }
-        .module-tab { padding: 20px 30px; color: var(--text-secondary); cursor: pointer; transition: var(--transition-smooth); border-bottom: 3px solid transparent; font-weight: 500; background: none; border-left: none; border-right: none; border-top: none; font-size: 16px; font-family: inherit; }
+        .project-main { flex: 1; display: flex; flex-direction: column; overflow: hidden; background: var(--bg-secondary); }
+        .module-tabs { display: flex; background: var(--bg-primary); border-bottom: 1px solid var(--border-color); padding: 0 24px; }
+        .module-tab { padding: 16px 24px; color: var(--text-secondary); cursor: pointer; transition: var(--transition-smooth); border-bottom: 3px solid transparent; font-weight: 500; background: none; border-left: none; border-right: none; border-top: none; font-size: 15px; font-family: inherit; }
         .module-tab:hover { color: var(--text-primary); }
         .module-tab.active { color: var(--accent-primary); border-bottom-color: var(--accent-primary); }
-        .module-content { flex: 1; overflow-y: auto; padding: 40px; }
+        .module-content { flex: 1; overflow-y: auto; padding: 30px; }
 
         .theory-panel { max-width: 900px; }
         .theory-panel h2 { font-size: 32px; margin-bottom: 24px; color: var(--accent-primary); }
@@ -244,27 +254,30 @@
         .tip-box { background: rgba(126, 231, 135, 0.1); border-left: 4px solid var(--accent-secondary); padding: 16px 20px; border-radius: 0 12px 12px 0; margin: 20px 0; }
 
         .code-panel { display: flex; flex-direction: column; height: 100%; }
-        .code-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .code-header h3 { font-size: 20px; }
-        .code-actions { display: flex; gap: 12px; }
+        .code-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+        .code-header h3 { font-size: 18px; color: var(--text-primary); }
+        .code-actions { display: flex; gap: 8px; }
         .code-btn { padding: 10px 20px; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; transition: var(--transition-smooth); display: flex; align-items: center; gap: 8px; border: 1px solid var(--border-color); background: var(--bg-tertiary); color: var(--text-primary); }
         .code-btn:hover { background: var(--bg-hover); }
-        .code-btn.primary { background: var(--accent-primary); color: var(--bg-primary); border-color: var(--accent-primary); }
-        .code-btn.primary:hover { background: #4090e0; }
-        .editor-container { flex: 1; display: flex; flex-direction: column; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 16px; overflow: hidden; }
-        .editor-toolbar { display: flex; align-items: center; gap: 12px; padding: 12px 20px; background: var(--bg-tertiary); border-bottom: 1px solid var(--border-color); }
+        .code-btn.primary { background: var(--accent-primary); color: white; border-color: var(--accent-primary); box-shadow: 0 2px 10px rgba(59, 130, 246, 0.3); }
+        .code-btn.primary:hover { background: #2563eb; }
+        .code-btn.quiz { background: var(--accent-purple); color: white; border-color: var(--accent-purple); box-shadow: 0 2px 10px rgba(139, 92, 246, 0.3); }
+        .code-btn.quiz:hover { background: #7c3aed; }
+        .code-btn.answer { background: var(--bg-tertiary); color: var(--text-secondary); }
+        .editor-container { flex: 1; display: flex; flex-direction: column; background: #1e1e1e; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); }
+        .editor-toolbar { display: flex; align-items: center; gap: 8px; padding: 12px 16px; background: #252526; border-bottom: 1px solid #3c3c3c; }
         .editor-dot { width: 12px; height: 12px; border-radius: 50%; }
         .editor-dot.red { background: #ff5f56; }
         .editor-dot.yellow { background: #ffbd2e; }
         .editor-dot.green { background: #27ca40; }
-        .editor-filename { margin-left: 12px; color: var(--text-secondary); font-size: 14px; }
-        .code-editor { flex: 1; padding: 20px; font-family: 'JetBrains Mono', monospace; font-size: 15px; line-height: 1.6; background: transparent; color: var(--text-primary); border: none; resize: none; outline: none; min-height: 400px; }
-        .output-section { border-top: 1px solid var(--border-color); max-height: 300px; overflow-y: auto; }
-        .output-header { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; background: var(--bg-tertiary); border-bottom: 1px solid var(--border-color); }
-        .output-header h4 { font-size: 14px; color: var(--text-secondary); }
-        .output-content { padding: 20px; font-family: 'JetBrains Mono', monospace; font-size: 14px; line-height: 1.6; color: var(--accent-secondary); white-space: pre-wrap; background: var(--bg-primary); }
-        .output-content.error { color: var(--accent-red); }
-        .output-placeholder { color: var(--text-tertiary); font-style: italic; }
+        .editor-filename { margin-left: 12px; color: #858585; font-size: 13px; font-family: 'JetBrains Mono', monospace; }
+        .code-editor { flex: 1; padding: 20px; font-family: 'JetBrains Mono', monospace; font-size: 14px; line-height: 1.6; background: #1e1e1e; color: #d4d4d4; border: none; resize: none; outline: none; min-height: 350px; }
+        .output-section { border-top: 1px solid #3c3c3c; max-height: 250px; overflow-y: auto; }
+        .output-header { display: flex; justify-content: space-between; align-items: center; padding: 10px 16px; background: #252526; border-bottom: 1px solid #3c3c3c; }
+        .output-header h4 { font-size: 13px; color: #858585; font-weight: 500; }
+        .output-content { padding: 16px; font-family: 'JetBrains Mono', monospace; font-size: 13px; line-height: 1.5; color: #4ade80; white-space: pre-wrap; background: #1e1e1e; }
+        .output-content.error { color: #f87171; }
+        .output-placeholder { color: #6a6a6a; font-style: italic; }
 
         .answer-panel { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 16px; overflow: hidden; }
         .answer-header { display: flex; justify-content: space-between; align-items: center; padding: 20px; background: var(--bg-tertiary); border-bottom: 1px solid var(--border-color); }
@@ -476,76 +489,149 @@ const projectsData = [
         duration: '2小时',
         description: '学习处理现实世界中的脏数据，包括缺失值、重复值、异常值的识别与处理，掌握数据类型转换与数据标准化方法。',
         icon: '🧹',
-        theory: `<h2>数据清洗概述</h2>
-<p>数据清洗是数据分析的第一步，也是最关键的步骤之一。真实世界的数据往往存在各种问题，如缺失值、重复记录、格式错误等，直接影响分析结果的准确性。</p>
+        theory: `<h2>数据清洗全流程概述</h2>
+<p>掌握Pandas数据清洗的核心技能，包括处理缺失值、重复值、异常值等关键步骤。</p>
 
-<div class="concept-box">
-<h4>💡 为什么数据清洗如此重要？</h4>
-<ul>
-<li><strong>Garbage In, Garbage Out</strong>: 脏数据会导致错误的分析结论</li>
-<li>清洗后的数据能提高模型准确率30%以上</li>
-<li>良好的数据质量是商业决策的基础</li>
-</ul>
-</div>
+<h3>一、数据清洗前的准备</h3>
 
-<h3>1. 缺失值处理</h3>
-<p>缺失值产生的原因可能是：数据录入错误、设备故障、用户不愿填写、合并数据时的字段不匹配等。</p>
-
+<h4>1.1 导入必要工具库</h4>
+<p>学习导入Pandas和NumPy库，这是数据分析的基础工具。</p>
 <pre><code class="language-python">import pandas as pd
 import numpy as np
+from sklearn.preprocessing import StandardScaler, MinMaxScaler</code></pre>
 
-# 创建包含缺失值的DataFrame
-df = pd.DataFrame({
-    '姓名': ['张三', '李四', None, '王五'],
-    '年龄': [25, None, 30, 28],
-    '工资': [8000, 9000, None, 8500]
-})
+<h4>1.2 读取原始数据</h4>
+<p>使用pd.read_csv()读取CSV文件，了解数据的基本结构。</p>
+<pre><code class="language-python"># 读取CSV文件
+df = pd.read_csv('data.csv')
 
-# 方法1: 删除含有缺失值的行
+# 查看数据基本信息
+print("数据形状:", df.shape)
+print("\\n数据类型:\\n", df.dtypes)
+print("\\n前5行数据:\\n", df.head())</code></pre>
+
+<h3>二、什么是数据清洗？</h3>
+<div class="concept-box">
+<h4>💡 核心概念</h4>
+<p>数据清洗是数据分析的第一步，解决数据质量问题，确保后续分析的准确性。</p>
+</div>
+
+<p><strong>常见的数据质量问题：</strong></p>
+<ul>
+<li>❌ <strong>缺失值</strong>: 数据记录中某些字段为空</li>
+<li>❌ <strong>重复值</strong>: 相同的记录重复出现</li>
+<li>❌ <strong>异常值</strong>: 明显偏离正常范围的数据</li>
+<li>❌ <strong>格式错误</strong>: 数据类型不正确或格式不统一</li>
+<li>❌ <strong>数据不一致</strong>: 同一实体的信息在不同记录中不一致</li>
+</ul>
+
+<h3>三、缺失值处理</h3>
+
+<h4>3.1 缺失值检测</h4>
+<pre><code class="language-python"># 检测每列的缺失值数量
+print("缺失值统计:\\n", df.isnull().sum())
+
+# 检测缺失值占比
+print("\\n缺失值占比:\\n", df.isnull().sum() / len(df) * 100)</code></pre>
+
+<h4>3.2 缺失值处理方法</h4>
+<ul>
+<li><strong>方法一：删除法</strong> - 适用于缺失比例较低或非关键字段</li>
+<li><strong>方法二：填充法</strong> - 适用于缺失比例较高或关键字段</li>
+<li><strong>方法三：插值法</strong> - 适用于时间序列数据</li>
+</ul>
+
+<pre><code class="language-python"># 方法1: 删除含有缺失值的行
 df_dropped = df.dropna()
 
-# 方法2: 用均值填充数值型缺失值
+# 方法2: 删除缺失超过50%的列
+df_clean = df.dropna(thresh=len(df)*0.5, axis=1)
+
+# 方法3: 用均值填充数值型缺失值
 df['年龄'].fillna(df['年龄'].mean(), inplace=True)
 
-# 方法3: 用中位数填充（对异常值更稳健）
-df['工资'].fillna(df['工资'].median(), inplace=True)</code></pre>
+# 方法4: 用中位数填充（对异常值更稳健）
+df['工资'].fillna(df['工资'].median(), inplace=True)
 
-<h3>2. 重复值检测</h3>
+# 方法5: 用众数填充类别型数据
+df['性别'].fillna(df['性别'].mode()[0], inplace=True)</code></pre>
+
+<h3>四、重复值检测与处理</h3>
+
+<h4>4.1 检测重复值</h4>
 <pre><code class="language-python"># 检测重复行
 duplicates = df[df.duplicated()]
+print("重复记录数:", len(duplicates))
 
-# 删除重复行，保留第一条
+# 显示重复记录
+print("\\n重复记录:\\n", duplicates)</code></pre>
+
+<h4>4.2 删除重复值</h4>
+<pre><code class="language-python"># 删除重复行，保留第一条
 df_unique = df.drop_duplicates(keep='first')
 
-# 基于特定列检测重复
-df.drop_duplicates(subset=['姓名'], keep='last', inplace=True)</code></pre>
+# 删除重复行，保留最后一条
+df_unique = df.drop_duplicates(keep='last')
 
-<h3>3. 数据类型转换</h3>
+# 基于特定列检测重复
+df.drop_duplicates(subset=['user_id'], keep='first', inplace=True)</code></pre>
+
+<h3>五、数据类型转换</h3>
+
+<h4>5.1 常见数据类型</h4>
+<ul>
+<li>int64 - 整数类型</li>
+<li>float64 - 浮点数类型</li>
+<li>object - 字符串/混合类型</li>
+<li>datetime64 - 日期时间类型</li>
+</ul>
+
+<h4>5.2 类型转换实战</h4>
 <pre><code class="language-python"># 查看数据类型
 print(df.dtypes)
 
-# 转换数据类型
+# 转换为整数
 df['年龄'] = df['年龄'].astype(int)
+
+# 转换为日期时间
 df['注册日期'] = pd.to_datetime(df['注册日期'])
 
 # 字符串处理
 df['电话'] = df['电话'].str.replace('-', '')
-df['邮箱'] = df['邮箱'].str.lower()</code></pre>
+df['邮箱'] = df['邮箱'].str.lower()
 
-<h3>4. 数据标准化</h3>
-<pre><code class="language-python">from sklearn.preprocessing import StandardScaler, MinMaxScaler
+# 转换为类别型
+df['性别'] = df['性别'].astype('category')</code></pre>
 
-# Z-score标准化 (均值0，标准差1)
+<h3>六、数据标准化</h3>
+
+<h4>6.1 Z-score标准化</h4>
+<p>将数据转换为均值为0，标准差为1的标准正态分布。</p>
+<pre><code class="language-python"># Z-score标准化
 scaler = StandardScaler()
-df['工资标准化'] = scaler.fit_transform(df[['工资']])
+df['工资标准化'] = scaler.fit_transform(df[['工资']])</code></pre>
 
-# Min-Max归一化 (0-1范围)
+<h4>6.2 Min-Max归一化</h4>
+<p>将数据缩放到[0, 1]范围内。</p>
+<pre><code class="language-python"># Min-Max归一化
 scaler = MinMaxScaler()
 df['工资归一化'] = scaler.fit_transform(df[['工资']])</code></pre>
 
 <div class="tip-box">
-<strong>💡 提示：</strong>选择哪种标准化方法取决于数据分布和后续使用的算法。Z-score适合近似正态分布的数据，Min-Max适合有明确边界的数据。
-</div>`,
+<strong>💡 选择建议：</strong>
+<ul>
+<li>Z-score适合近似正态分布的数据，且算法对尺度敏感时使用</li>
+<li>Min-Max适合有明确边界的数据，或需要保留数据分布形状时使用</li>
+</ul>
+</div>
+
+<h3>七、数据清洗最佳实践</h3>
+<ul>
+<li>📊 <strong>先探索后清洗</strong>: 使用describe()、info()了解数据全貌</li>
+<li>🔄 <strong>保留原始数据</strong>: 清洗前先复制一份</li>
+<li>📝 <strong>记录清洗过程</strong>: 便于追溯和复现</li>
+<li>✅ <strong>验证清洗结果</strong>: 清洗后再次检查数据质量</li>
+</ul>`,
         practice: {
             instruction: '请完成以下数据清洗任务：\n\n1. 创建包含缺失值和重复数据的DataFrame\n2. 删除重复记录\n3. 用适当的方式填充缺失值\n4. 对金额进行标准化处理',
             starterCode: `import pandas as pd
@@ -2199,10 +2285,15 @@ function openProject(projectId) {
 }
 
 function renderProjectInfo() {
+    const levelClass = currentProject.level === 'basic' ? 'level-basic' : 
+                       currentProject.level === 'intermediate' ? 'level-intermediate' : 'level-advanced';
     const infoHTML = `
-        <span class="project-level" style="background: ${currentProject.level === 'basic' ? 'rgba(88, 166, 255, 0.2)' : currentProject.level === 'intermediate' ? 'rgba(126, 231, 135, 0.2)' : 'rgba(163, 113, 247, 0.2)'}; color: ${currentProject.level === 'basic' ? 'var(--accent-primary)' : currentProject.level === 'intermediate' ? 'var(--accent-secondary)' : 'var(--accent-purple)'}">${currentProject.levelName}</span>
         <h1>${currentProject.title}</h1>
         <p>${currentProject.description}</p>
+        <div class="project-badges">
+            <span class="project-badge ${levelClass}">${currentProject.levelName}</span>
+            <span class="project-badge time">⏱ ${currentProject.duration}</span>
+        </div>
     `;
     document.getElementById('projectInfo').innerHTML = infoHTML;
     
@@ -2210,18 +2301,22 @@ function renderProjectInfo() {
         <div class="module-item active" onclick="switchTab('theory')">
             <div class="module-icon">📖</div>
             <div class="module-info"><h4>概念理论</h4><p>学习核心知识点</p></div>
+            <div class="module-expand">+</div>
         </div>
         <div class="module-item" onclick="switchTab('practice')">
             <div class="module-icon">💻</div>
             <div class="module-info"><h4>代码实践</h4><p>动手编写代码</p></div>
+            <div class="module-expand">+</div>
         </div>
         <div class="module-item" onclick="switchTab('answer')">
             <div class="module-icon">✅</div>
             <div class="module-info"><h4>参考答案</h4><p>查看完整解答</p></div>
+            <div class="module-expand">+</div>
         </div>
         <div class="module-item" onclick="switchTab('quiz')">
             <div class="module-icon">📝</div>
             <div class="module-info"><h4>随堂测验</h4><p>检验学习成果</p></div>
+            <div class="module-expand">+</div>
         </div>
     `;
     document.getElementById('moduleList').innerHTML = moduleHTML;
@@ -2252,8 +2347,10 @@ function renderTabContent() {
                     <div class="code-header">
                         <h3>💻 代码练习</h3>
                         <div class="code-actions">
-                            <button class="code-btn" onclick="resetCode()">🔄 重置</button>
                             <button class="code-btn primary" onclick="runCode()">▶️ 运行代码</button>
+                            <button class="code-btn" onclick="resetCode()">🔄 重置代码</button>
+                            <button class="code-btn answer" onclick="switchTab('answer')">📋 显示参考答案</button>
+                            <button class="code-btn quiz" onclick="switchTab('quiz')">📝 开始测试</button>
                         </div>
                     </div>
                     <div class="editor-container">
@@ -2261,11 +2358,11 @@ function renderTabContent() {
                             <div class="editor-dot red"></div>
                             <div class="editor-dot yellow"></div>
                             <div class="editor-dot green"></div>
-                            <span class="editor-filename">practice.py</span>
+                            <span class="editor-filename">01-cleaning/main.py</span>
                         </div>
                         <textarea class="code-editor" id="codeEditor">${currentProject.practice.starterCode}</textarea>
                         <div class="output-section">
-                            <div class="output-header"><h4>📤 输出结果</h4></div>
+                            <div class="output-header"><h4>💬 执行结果</h4></div>
                             <div class="output-content" id="outputContent"><span class="output-placeholder">点击"运行代码"查看输出...</span></div>
                         </div>
                     </div>
