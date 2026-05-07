@@ -202,34 +202,359 @@
         .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent-primary), var(--accent-purple)); border-radius: 3px; transition: width 0.5s ease-out; }
         .progress-text { font-size: 13px; color: var(--text-secondary); }
 
-        .project-detail { display: flex; min-height: calc(100vh - 70px); }
-        .project-sidebar { width: 350px; background: var(--bg-secondary); border-right: 1px solid var(--border-color); padding: 30px; overflow-y: auto; flex-shrink: 0; }
-        .back-btn { display: flex; align-items: center; gap: 8px; color: var(--text-secondary); cursor: pointer; margin-bottom: 30px; transition: var(--transition-smooth); background: none; border: none; font-size: 16px; font-family: inherit; }
-        .back-btn:hover { color: var(--accent-primary); }
-        .project-info { margin-bottom: 30px; }
-        .project-info h1 { font-size: 28px; margin-bottom: 12px; }
-        .project-info p { color: var(--text-secondary); line-height: 1.6; margin-bottom: 20px; }
-        .project-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 30px; }
-        .stat-card { background: var(--bg-tertiary); padding: 15px; border-radius: 12px; text-align: center; }
-        .stat-card .stat-value { font-family: 'Outfit', sans-serif; font-size: 24px; font-weight: 700; color: var(--accent-primary); }
-        .stat-card .stat-label { font-size: 13px; color: var(--text-secondary); margin-top: 4px; }
-        .module-list { display: flex; flex-direction: column; gap: 8px; }
-        .module-item { display: flex; align-items: center; gap: 12px; padding: 14px 18px; background: var(--bg-tertiary); border-radius: 10px; cursor: pointer; transition: var(--transition-smooth); border: 1px solid transparent; }
-        .module-item:hover { border-color: var(--accent-primary); }
-        .module-item.active { background: rgba(88, 166, 255, 0.1); border-color: var(--accent-primary); }
-        .module-item.completed { background: rgba(126, 231, 135, 0.1); }
-        .module-icon { width: 32px; height: 32px; border-radius: 8px; background: var(--bg-hover); display: flex; align-items: center; justify-content: center; font-size: 16px; }
-        .module-item.active .module-icon { background: var(--accent-primary); color: var(--bg-primary); }
-        .module-item.completed .module-icon { background: var(--accent-secondary); color: var(--bg-primary); }
-        .module-info h4 { font-size: 15px; margin-bottom: 2px; }
-        .module-info p { font-size: 13px; color: var(--text-tertiary); }
-
-        .project-main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
-        .module-tabs { display: flex; background: var(--bg-secondary); border-bottom: 1px solid var(--border-color); padding: 0 30px; }
-        .module-tab { padding: 20px 30px; color: var(--text-secondary); cursor: pointer; transition: var(--transition-smooth); border-bottom: 3px solid transparent; font-weight: 500; background: none; border-left: none; border-right: none; border-top: none; font-size: 16px; font-family: inherit; }
-        .module-tab:hover { color: var(--text-primary); }
-        .module-tab.active { color: var(--accent-primary); border-bottom-color: var(--accent-primary); }
-        .module-content { flex: 1; overflow-y: auto; padding: 40px; }
+        .project-detail { display: flex; min-height: calc(100vh - 70px); position: relative; }
+        
+        /* 左侧面板 */
+        .left-panel { 
+            width: 50%; 
+            min-width: 30%; 
+            max-width: 70%; 
+            background: var(--bg-secondary); 
+            display: flex; 
+            flex-direction: column; 
+            overflow: hidden;
+        }
+        .panel-header { 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+            padding: 12px 20px; 
+            background: var(--bg-tertiary); 
+            border-bottom: 1px solid var(--border-color);
+        }
+        .back-btn { 
+            display: flex; 
+            align-items: center; 
+            gap: 6px; 
+            color: var(--text-secondary); 
+            cursor: pointer; 
+            transition: var(--transition-smooth); 
+            background: var(--bg-secondary); 
+            border: 1px solid var(--border-color); 
+            border-radius: 6px; 
+            padding: 6px 12px; 
+            font-size: 14px; 
+            font-family: inherit; 
+        }
+        .back-btn:hover { color: var(--accent-primary); border-color: var(--accent-primary); }
+        .file-path { 
+            font-family: 'JetBrains Mono', monospace; 
+            font-size: 13px; 
+            color: var(--text-secondary); 
+            background: var(--bg-primary); 
+            padding: 6px 12px; 
+            border-radius: 6px; 
+        }
+        .project-title-bar { 
+            display: flex; 
+            align-items: center; 
+            gap: 12px; 
+            padding: 16px 20px; 
+            border-bottom: 1px solid var(--border-color);
+        }
+        .project-title-bar h1 { 
+            font-size: 22px; 
+            font-weight: 600; 
+            margin: 0; 
+        }
+        .project-level-badge { 
+            padding: 4px 12px; 
+            border-radius: 12px; 
+            font-size: 12px; 
+            font-weight: 600; 
+            background: rgba(88, 166, 255, 0.15); 
+            color: var(--accent-primary); 
+        }
+        .project-level-badge.intermediate { background: rgba(126, 231, 135, 0.15); color: var(--accent-secondary); }
+        .project-level-badge.advanced { background: rgba(163, 113, 247, 0.15); color: var(--accent-purple); }
+        
+        /* 左侧标签页 */
+        .left-tabs { 
+            display: flex; 
+            background: var(--bg-tertiary); 
+            border-bottom: 1px solid var(--border-color); 
+        }
+        .left-tab { 
+            flex: 1; 
+            padding: 12px 20px; 
+            color: var(--text-secondary); 
+            cursor: pointer; 
+            transition: var(--transition-smooth); 
+            border-bottom: 2px solid transparent; 
+            font-weight: 500; 
+            background: none; 
+            border-left: none; 
+            border-right: none; 
+            border-top: none; 
+            font-size: 14px; 
+            font-family: inherit; 
+            text-align: center;
+        }
+        .left-tab:hover { color: var(--text-primary); background: var(--bg-hover); }
+        .left-tab.active { color: var(--accent-primary); border-bottom-color: var(--accent-primary); background: var(--bg-secondary); }
+        
+        /* 左侧内容区 */
+        .left-content { flex: 1; overflow: hidden; position: relative; }
+        .theory-scroll, .answer-scroll { 
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            right: 0; 
+            bottom: 0; 
+            overflow-y: auto; 
+            padding: 24px; 
+        }
+        .answer-code-wrapper { position: relative; }
+        .copy-btn { 
+            position: absolute; 
+            top: 12px; 
+            right: 12px; 
+            padding: 8px 16px; 
+            background: var(--accent-primary); 
+            color: var(--bg-primary); 
+            border: none; 
+            border-radius: 6px; 
+            font-size: 13px; 
+            font-weight: 600; 
+            cursor: pointer; 
+            transition: var(--transition-smooth); 
+            z-index: 10;
+        }
+        .copy-btn:hover { background: #4090e0; }
+        .answer-scroll pre { 
+            background: var(--bg-primary); 
+            border-radius: 12px; 
+            padding: 20px; 
+            padding-top: 50px;
+            overflow-x: auto; 
+            margin: 0;
+        }
+        .answer-scroll code { font-size: 13px; line-height: 1.6; }
+        
+        /* 垂直分割条 */
+        .vertical-resizer { 
+            width: 6px; 
+            background: var(--border-color); 
+            cursor: col-resize; 
+            position: relative; 
+            flex-shrink: 0;
+            transition: background 0.2s ease;
+        }
+        .vertical-resizer:hover, .vertical-resizer.dragging { 
+            background: var(--accent-primary); 
+        }
+        .resizer-dots { 
+            position: absolute; 
+            top: 50%; 
+            left: 50%; 
+            transform: translate(-50%, -50%); 
+            display: flex; 
+            flex-direction: column; 
+            gap: 3px;
+        }
+        .resizer-dots span { 
+            width: 3px; 
+            height: 3px; 
+            background: var(--text-tertiary); 
+            border-radius: 50%; 
+        }
+        .vertical-resizer:hover .resizer-dots span { background: var(--bg-primary); }
+        
+        /* 右侧面板 */
+        .right-panel { 
+            flex: 1; 
+            min-width: 30%; 
+            background: var(--bg-primary); 
+            display: flex; 
+            flex-direction: column; 
+            overflow: hidden;
+        }
+        .right-toolbar { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 12px 20px; 
+            background: var(--bg-tertiary); 
+            border-bottom: 1px solid var(--border-color);
+        }
+        .toolbar-left { display: flex; align-items: center; gap: 12px; }
+        .editor-title { font-weight: 600; font-size: 15px; color: var(--text-primary); }
+        .toolbar-right { display: flex; gap: 10px; }
+        .code-btn { 
+            padding: 8px 16px; 
+            border-radius: 6px; 
+            font-size: 13px; 
+            font-weight: 600; 
+            cursor: pointer; 
+            transition: var(--transition-smooth); 
+            display: flex; 
+            align-items: center; 
+            gap: 6px; 
+            border: 1px solid var(--border-color); 
+            background: var(--bg-secondary); 
+            color: var(--text-primary);
+        }
+        .code-btn:hover { background: var(--bg-hover); transform: translateY(-1px); }
+        .code-btn.primary { 
+            background: linear-gradient(135deg, var(--accent-primary), #2563eb); 
+            color: white; 
+            border-color: transparent; 
+            box-shadow: 0 2px 8px rgba(88, 166, 255, 0.3);
+        }
+        .code-btn.primary:hover { box-shadow: 0 4px 12px rgba(88, 166, 255, 0.4); }
+        .code-btn.quiz { 
+            background: linear-gradient(135deg, var(--accent-purple), #9333ea); 
+            color: white; 
+            border-color: transparent; 
+            box-shadow: 0 2px 8px rgba(163, 113, 247, 0.3);
+        }
+        .code-btn.quiz:hover { box-shadow: 0 4px 12px rgba(163, 113, 247, 0.4); }
+        
+        /* 编辑器区域 */
+        .editor-section { 
+            flex: 1; 
+            min-height: 100px;
+            display: flex; 
+            flex-direction: column; 
+            overflow: hidden;
+        }
+        .editor-container-new { 
+            flex: 1; 
+            display: flex; 
+            flex-direction: column; 
+            background: #1e1e1e; 
+            overflow: hidden;
+        }
+        .editor-toolbar { 
+            display: flex; 
+            align-items: center; 
+            gap: 8px; 
+            padding: 10px 16px; 
+            background: #252526; 
+            border-bottom: 1px solid #3c3c3c;
+        }
+        .editor-dot { width: 10px; height: 10px; border-radius: 50%; }
+        .editor-dot.red { background: #ff5f56; }
+        .editor-dot.yellow { background: #ffbd2e; }
+        .editor-dot.green { background: #27ca40; }
+        .editor-filename { margin-left: 10px; color: #858585; font-size: 13px; font-family: 'JetBrains Mono', monospace; }
+        .code-editor-new { 
+            flex: 1; 
+            padding: 16px 20px; 
+            font-family: 'JetBrains Mono', monospace; 
+            font-size: 14px; 
+            line-height: 1.6; 
+            background: #1e1e1e; 
+            color: #d4d4d4; 
+            border: none; 
+            resize: none; 
+            outline: none;
+            tab-size: 4;
+        }
+        .code-editor-new::placeholder { color: #6a6a6a; }
+        
+        /* 水平分割条 */
+        .horizontal-resizer { 
+            height: 6px; 
+            background: var(--border-color); 
+            cursor: row-resize; 
+            position: relative; 
+            flex-shrink: 0;
+            transition: background 0.2s ease;
+        }
+        .horizontal-resizer:hover, .horizontal-resizer.dragging { 
+            background: var(--accent-primary); 
+        }
+        .h-resizer-dots { 
+            position: absolute; 
+            top: 50%; 
+            left: 50%; 
+            transform: translate(-50%, -50%); 
+            display: flex; 
+            gap: 3px;
+        }
+        .h-resizer-dots span { 
+            width: 3px; 
+            height: 3px; 
+            background: var(--text-tertiary); 
+            border-radius: 50%; 
+        }
+        .horizontal-resizer:hover .h-resizer-dots span { background: var(--bg-primary); }
+        
+        /* 控制台区域 */
+        .console-section { 
+            height: 30%; 
+            min-height: 80px;
+            display: flex; 
+            flex-direction: column; 
+            background: #0d1117; 
+            border-top: 1px solid var(--border-color);
+        }
+        .console-header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 10px 16px; 
+            background: #161b22; 
+            border-bottom: 1px solid var(--border-color);
+        }
+        .console-title { 
+            display: flex; 
+            align-items: center; 
+            gap: 8px; 
+            font-size: 13px; 
+            font-weight: 600; 
+            color: var(--text-secondary);
+        }
+        .clear-btn { 
+            padding: 4px 12px; 
+            background: transparent; 
+            border: 1px solid var(--border-color); 
+            border-radius: 4px; 
+            color: var(--text-secondary); 
+            font-size: 12px; 
+            cursor: pointer; 
+            transition: var(--transition-smooth);
+        }
+        .clear-btn:hover { background: var(--bg-hover); color: var(--text-primary); }
+        .console-output { 
+            flex: 1; 
+            padding: 16px 20px; 
+            font-family: 'JetBrains Mono', monospace; 
+            font-size: 13px; 
+            line-height: 1.5; 
+            color: #4ade80; 
+            white-space: pre-wrap; 
+            overflow-y: auto;
+        }
+        .console-output.error { color: #f87171; }
+        .console-output.warning { color: #fbbf24; }
+        .console-output.info { color: #60a5fa; }
+        .output-placeholder { color: #6a6a6a; font-style: italic; }
+        
+        /* 理论内容样式优化 */
+        .theory-scroll h2 { font-size: 24px; margin-bottom: 16px; color: var(--accent-primary); }
+        .theory-scroll h3 { font-size: 20px; margin: 24px 0 12px; color: var(--text-primary); }
+        .theory-scroll h4 { font-size: 16px; margin: 20px 0 10px; color: var(--text-primary); }
+        .theory-scroll p { line-height: 1.8; color: var(--text-secondary); margin-bottom: 14px; }
+        .theory-scroll ul, .theory-scroll ol { padding-left: 24px; margin-bottom: 14px; }
+        .theory-scroll li { color: var(--text-secondary); line-height: 1.8; margin-bottom: 8px; }
+        .theory-scroll pre { background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 10px; padding: 16px; overflow-x: auto; margin: 16px 0; }
+        .theory-scroll code { font-size: 13px; line-height: 1.5; }
+        .theory-scroll .concept-box { background: linear-gradient(135deg, rgba(88, 166, 255, 0.1), rgba(163, 113, 247, 0.1)); border: 1px solid rgba(88, 166, 255, 0.3); border-radius: 12px; padding: 20px; margin: 20px 0; }
+        .theory-scroll .tip-box { background: rgba(126, 231, 135, 0.1); border-left: 4px solid var(--accent-secondary); padding: 14px 18px; border-radius: 0 10px 10px 0; margin: 16px 0; }
+        
+        /* 拖动时禁止选中文字 */
+        .no-select { user-select: none; }
+        
+        /* 响应式布局 */
+        @media (max-width: 900px) {
+            .project-detail { flex-direction: column !important; }
+            .left-panel { width: 100% !important; max-width: 100% !important; min-width: 100% !important; height: auto; min-height: 300px; max-height: 40vh; }
+            .right-panel { width: 100% !important; min-width: 100% !important; flex: 1; min-height: 400px; }
+            .vertical-resizer { display: none; }
+            .horizontal-resizer { height: 4px; }
+        }
 
         .theory-panel { max-width: 900px; }
         .theory-panel h2 { font-size: 32px; margin-bottom: 24px; color: var(--accent-primary); }
@@ -311,7 +636,6 @@
         .toast-content h4 { font-size: 16px; margin-bottom: 4px; }
         .toast-content p { font-size: 14px; color: var(--text-secondary); }
 
-        @media (max-width: 1200px) { .project-detail { flex-direction: column; } .project-sidebar { width: 100%; max-height: 400px; } }
         @media (max-width: 768px) {
             .nav { padding: 0 20px; }
             .nav-links { display: none; }
@@ -435,20 +759,91 @@
 
         <div class="page" id="page-project">
             <div class="project-detail">
-                <aside class="project-sidebar">
-                    <button class="back-btn" onclick="navigateTo('courses')"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>返回课程</button>
-                    <div class="project-info" id="projectInfo"></div>
-                    <h3 style="margin-bottom: 16px; font-size: 16px;">学习模块</h3>
-                    <div class="module-list" id="moduleList"></div>
-                </aside>
-                <div class="project-main">
-                    <div class="module-tabs">
-                        <button class="module-tab active" data-tab="theory" onclick="switchTab('theory')">📖 概念理论</button>
-                        <button class="module-tab" data-tab="practice" onclick="switchTab('practice')">💻 代码实践</button>
-                        <button class="module-tab" data-tab="answer" onclick="switchTab('answer')">✅ 参考答案</button>
-                        <button class="module-tab" data-tab="quiz" onclick="switchTab('quiz')">📝 随堂测验</button>
+                <!-- 左侧：题目与参考答案区 -->
+                <div class="left-panel" id="leftPanel">
+                    <div class="panel-header">
+                        <button class="back-btn" onclick="navigateTo('courses')"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>返回</button>
+                        <div class="file-path" id="filePath">01-cleaning/main.py</div>
                     </div>
-                    <div class="module-content" id="moduleContent"></div>
+                    <div class="project-title-bar">
+                        <h1 id="projectTitle">数据清洗实践</h1>
+                        <span class="project-level-badge" id="projectLevel">基础入门</span>
+                    </div>
+                    <div class="left-tabs">
+                        <button class="left-tab active" data-tab="theory" onclick="switchLeftTab('theory')">📖 题目要求</button>
+                        <button class="left-tab" data-tab="answer" onclick="switchLeftTab('answer')">✅ 参考答案</button>
+                    </div>
+                    <div class="left-content" id="leftContent">
+                        <div class="theory-scroll" id="theoryContent"></div>
+                        <div class="answer-scroll" id="answerContent" style="display:none;">
+                            <div class="answer-code-wrapper">
+                                <button class="copy-btn" onclick="copyAnswer()">📋 复制代码</button>
+                                <pre><code class="language-python" id="answerCode"></code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 垂直分割条 -->
+                <div class="vertical-resizer" id="verticalResizer">
+                    <div class="resizer-dots">
+                        <span></span><span></span><span></span>
+                    </div>
+                </div>
+                
+                <!-- 右侧：代码编辑器与运行调试区 -->
+                <div class="right-panel" id="rightPanel">
+                    <div class="right-toolbar">
+                        <div class="toolbar-left">
+                            <span class="editor-title">💻 代码编辑器</span>
+                        </div>
+                        <div class="toolbar-right">
+                            <button class="code-btn primary" onclick="runCode()">
+                                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                                运行代码
+                            </button>
+                            <button class="code-btn" onclick="resetCode()">
+                                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
+                                重置代码
+                            </button>
+                            <button class="code-btn quiz" onclick="startQuiz()">
+                                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+                                开始测试
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="editor-section" id="editorSection">
+                        <div class="editor-container-new">
+                            <div class="editor-toolbar">
+                                <div class="editor-dot red"></div>
+                                <div class="editor-dot yellow"></div>
+                                <div class="editor-dot green"></div>
+                                <span class="editor-filename">main.py</span>
+                            </div>
+                            <textarea class="code-editor-new" id="codeEditor" placeholder="# 在此编写Python代码..." spellcheck="false"></textarea>
+                        </div>
+                    </div>
+                    
+                    <!-- 水平分割条 -->
+                    <div class="horizontal-resizer" id="horizontalResizer">
+                        <div class="h-resizer-dots">
+                            <span></span><span></span><span></span>
+                        </div>
+                    </div>
+                    
+                    <div class="console-section" id="consoleSection">
+                        <div class="console-header">
+                            <span class="console-title">
+                                <svg viewBox="0 0 24 24" width="16" height="16" fill="#4ade80"><path d="M20 6H4V2h16v4zm0 16H4v-4h16v4zM4 10h4v4H4v-4zm6 0h10v4H10v-4z"/></svg>
+                                执行结果
+                            </span>
+                            <button class="clear-btn" onclick="clearOutput()">清空</button>
+                        </div>
+                        <div class="console-output" id="outputContent">
+                            <span class="output-placeholder">点击"运行代码"查看输出...</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -2190,108 +2585,193 @@ function openProject(projectId) {
     if (!currentProject) return;
     
     navigateTo('project');
-    renderProjectInfo();
-    switchTab('theory');
+    
+    // 更新左侧面板
+    document.getElementById('projectTitle').textContent = currentProject.title;
+    document.getElementById('filePath').textContent = `${currentProject.id}/main.py`;
+    
+    const levelBadge = document.getElementById('projectLevel');
+    levelBadge.textContent = currentProject.levelName;
+    levelBadge.className = 'project-level-badge' + (currentProject.level === 'intermediate' ? ' intermediate' : currentProject.level === 'advanced' ? ' advanced' : '');
+    
+    // 渲染理论内容
+    document.getElementById('theoryContent').innerHTML = marked.parse(currentProject.theory);
+    document.getElementById('answerCode').textContent = currentProject.practice.referenceAnswer;
+    
+    // 设置代码编辑器
+    document.getElementById('codeEditor').value = currentProject.practice.starterCode;
+    
+    // 高亮代码
+    Prism.highlightAll();
+    
+    // 初始化分割条拖动
+    initResizers();
     
     if (!progress.codeRuns) {
         unlockAchievement('first_code');
     }
 }
 
-function renderProjectInfo() {
-    const infoHTML = `
-        <span class="project-level" style="background: ${currentProject.level === 'basic' ? 'rgba(88, 166, 255, 0.2)' : currentProject.level === 'intermediate' ? 'rgba(126, 231, 135, 0.2)' : 'rgba(163, 113, 247, 0.2)'}; color: ${currentProject.level === 'basic' ? 'var(--accent-primary)' : currentProject.level === 'intermediate' ? 'var(--accent-secondary)' : 'var(--accent-purple)'}">${currentProject.levelName}</span>
-        <h1>${currentProject.title}</h1>
-        <p>${currentProject.description}</p>
-    `;
-    document.getElementById('projectInfo').innerHTML = infoHTML;
+// 初始化分割条拖动
+function initResizers() {
+    const verticalResizer = document.getElementById('verticalResizer');
+    const horizontalResizer = document.getElementById('horizontalResizer');
+    const leftPanel = document.getElementById('leftPanel');
+    const rightPanel = document.getElementById('rightPanel');
+    const editorSection = document.getElementById('editorSection');
+    const consoleSection = document.getElementById('consoleSection');
     
-    const moduleHTML = `
-        <div class="module-item active" onclick="switchTab('theory')">
-            <div class="module-icon">📖</div>
-            <div class="module-info"><h4>概念理论</h4><p>学习核心知识点</p></div>
-        </div>
-        <div class="module-item" onclick="switchTab('practice')">
-            <div class="module-icon">💻</div>
-            <div class="module-info"><h4>代码实践</h4><p>动手编写代码</p></div>
-        </div>
-        <div class="module-item" onclick="switchTab('answer')">
-            <div class="module-icon">✅</div>
-            <div class="module-info"><h4>参考答案</h4><p>查看完整解答</p></div>
-        </div>
-        <div class="module-item" onclick="switchTab('quiz')">
-            <div class="module-icon">📝</div>
-            <div class="module-info"><h4>随堂测验</h4><p>检验学习成果</p></div>
-        </div>
-    `;
-    document.getElementById('moduleList').innerHTML = moduleHTML;
-}
-
-function switchTab(tab) {
-    currentTab = tab;
-    document.querySelectorAll('.module-tab').forEach(t => t.classList.remove('active'));
-    document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
-    document.querySelectorAll('.module-item').forEach((m, i) => {
-        m.classList.toggle('active', (i === ['theory', 'practice', 'answer', 'quiz'].indexOf(tab)));
+    // 垂直分割条拖动
+    let isDraggingV = false;
+    
+    verticalResizer.addEventListener('mousedown', (e) => {
+        isDraggingV = true;
+        verticalResizer.classList.add('dragging');
+        document.body.classList.add('no-select');
     });
-    renderTabContent();
+    
+    document.addEventListener('mousemove', (e) => {
+        if (!isDraggingV) return;
+        
+        const container = document.querySelector('.project-detail');
+        const containerRect = container.getBoundingClientRect();
+        const newWidth = ((e.clientX - containerRect.left) / containerRect.width) * 100;
+        
+        if (newWidth >= 30 && newWidth <= 70) {
+            leftPanel.style.width = newWidth + '%';
+        }
+    });
+    
+    document.addEventListener('mouseup', () => {
+        if (isDraggingV) {
+            isDraggingV = false;
+            verticalResizer.classList.remove('dragging');
+            document.body.classList.remove('no-select');
+        }
+    });
+    
+    // 水平分割条拖动
+    let isDraggingH = false;
+    
+    horizontalResizer.addEventListener('mousedown', (e) => {
+        isDraggingH = true;
+        horizontalResizer.classList.add('dragging');
+        document.body.classList.add('no-select');
+    });
+    
+    document.addEventListener('mousemove', (e) => {
+        if (!isDraggingH) return;
+        
+        const rightPanelRect = rightPanel.getBoundingClientRect();
+        const toolbarHeight = 52; // right-toolbar高度
+        const availableHeight = rightPanelRect.height - toolbarHeight;
+        const relativeY = e.clientY - rightPanelRect.top - toolbarHeight;
+        const newEditorHeight = (relativeY / availableHeight) * 100;
+        
+        if (newEditorHeight >= 20 && newEditorHeight <= 80) {
+            editorSection.style.flex = 'none';
+            editorSection.style.height = newEditorHeight + '%';
+            consoleSection.style.height = (100 - newEditorHeight) + '%';
+        }
+    });
+    
+    document.addEventListener('mouseup', () => {
+        if (isDraggingH) {
+            isDraggingH = false;
+            horizontalResizer.classList.remove('dragging');
+            document.body.classList.remove('no-select');
+        }
+    });
 }
 
-function renderTabContent() {
-    const content = document.getElementById('moduleContent');
+// 切换左侧标签页
+function switchLeftTab(tab) {
+    document.querySelectorAll('.left-tab').forEach(t => t.classList.remove('active'));
+    document.querySelector(`.left-tab[data-tab="${tab}"]`).classList.add('active');
     
-    switch (currentTab) {
-        case 'theory':
-            content.innerHTML = `<div class="theory-panel">${marked.parse(currentProject.theory)}</div>`;
-            Prism.highlightAll();
-            break;
-            
-        case 'practice':
-            content.innerHTML = `
-                <div class="code-panel">
-                    <div class="code-header">
-                        <h3>💻 代码练习</h3>
-                        <div class="code-actions">
-                            <button class="code-btn" onclick="resetCode()">🔄 重置</button>
-                            <button class="code-btn primary" onclick="runCode()">▶️ 运行代码</button>
-                        </div>
-                    </div>
-                    <div class="editor-container">
-                        <div class="editor-toolbar">
-                            <div class="editor-dot red"></div>
-                            <div class="editor-dot yellow"></div>
-                            <div class="editor-dot green"></div>
-                            <span class="editor-filename">practice.py</span>
-                        </div>
-                        <textarea class="code-editor" id="codeEditor">${currentProject.practice.starterCode}</textarea>
-                        <div class="output-section">
-                            <div class="output-header"><h4>📤 输出结果</h4></div>
-                            <div class="output-content" id="outputContent"><span class="output-placeholder">点击"运行代码"查看输出...</span></div>
-                        </div>
-                    </div>
-                </div>
-            `;
-            break;
-            
-        case 'answer':
-            content.innerHTML = `
-                <div class="answer-panel">
-                    <div class="answer-header">
-                        <h3>✅ 参考答案</h3>
-                        <button class="code-btn" onclick="copyAnswer()">📋 复制代码</button>
-                    </div>
-                    <div class="answer-content">
-                        <pre><code class="language-python">${currentProject.practice.referenceAnswer}</code></pre>
-                    </div>
-                </div>
-            `;
-            Prism.highlightAll();
-            break;
-            
-        case 'quiz':
-            renderQuiz();
-            break;
+    const theoryContent = document.getElementById('theoryContent');
+    const answerContent = document.getElementById('answerContent');
+    
+    if (tab === 'theory') {
+        theoryContent.style.display = 'block';
+        answerContent.style.display = 'none';
+    } else {
+        theoryContent.style.display = 'none';
+        answerContent.style.display = 'block';
+        Prism.highlightAll();
     }
+}
+
+// 复制参考答案
+function copyAnswer() {
+    const code = currentProject.practice.referenceAnswer;
+    navigator.clipboard.writeText(code).then(() => {
+        showToast('代码已复制到剪贴板', 'success');
+    }).catch(() => {
+        showToast('复制失败', 'error');
+    });
+}
+
+// 清空输出
+function clearOutput() {
+    document.getElementById('outputContent').innerHTML = '<span class="output-placeholder">点击"运行代码"查看输出...</span>';
+}
+
+// 开始测试
+function startQuiz() {
+    renderQuiz();
+}
+
+// 渲染测验
+function renderQuiz() {
+    if (!currentProject || !currentProject.quiz) return;
+    
+    let quizHTML = '<div class="quiz-panel"><h2>📝 随堂测验</h2>';
+    currentProject.quiz.forEach((q, i) => {
+        quizHTML += `
+            <div class="quiz-question">
+                <h3><span class="q-num">${i + 1}</span>${q.question}</h3>
+                <div class="quiz-options">
+                    ${q.options.map((opt, j) => `
+                        <label class="quiz-option" data-question="${i}" data-answer="${j}">
+                            <input type="radio" name="q${i}" value="${j}">
+                            <span>${String.fromCharCode(65 + j)}. ${opt}</span>
+                        </label>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+    });
+    quizHTML += '<button class="code-btn primary" onclick="submitQuiz()" style="margin-top: 20px;">提交答案</button></div>';
+    
+    // 显示测验在左侧面板
+    document.getElementById('theoryContent').innerHTML = quizHTML;
+    switchLeftTab('theory');
+}
+
+// 提交测验
+function submitQuiz() {
+    if (!currentProject || !currentProject.quiz) return;
+    
+    let correct = 0;
+    currentProject.quiz.forEach((q, i) => {
+        const selected = document.querySelector(`input[name="q${i}"]:checked`);
+        if (selected && parseInt(selected.value) === q.correct) {
+            correct++;
+        }
+    });
+    
+    const total = currentProject.quiz.length;
+    const score = Math.round((correct / total) * 100);
+    
+    progress.quizScores[currentProject.id] = score;
+    saveProgress();
+    
+    if (score >= 80) {
+        unlockAchievement('quiz_master');
+    }
+    
+    showToast(`测验完成！得分: ${score}分 (${correct}/${total})`, score >= 60 ? 'success' : 'warning');
 }
 
 function runCode() {
@@ -2351,91 +2831,6 @@ function escapeHtml(text) {
 function resetCode() {
     document.getElementById('codeEditor').value = currentProject.practice.starterCode;
     document.getElementById('outputContent').innerHTML = '<span class="output-placeholder">点击"运行代码"查看输出...</span>';
-}
-
-function copyAnswer() {
-    navigator.clipboard.writeText(currentProject.practice.referenceAnswer);
-    showToast('代码已复制到剪贴板！', 'success');
-}
-
-function renderQuiz() {
-    const quizHTML = `
-        <div class="quiz-panel">
-            <h2>📝 随堂测验</h2>
-            ${currentProject.quiz.map((q, i) => `
-                <div class="quiz-question" data-q="${i}">
-                    <h3><span class="q-num">${i + 1}</span>${q.question}</h3>
-                    <div class="quiz-options">
-                        ${q.options.map((opt, j) => `
-                            <div class="quiz-option" onclick="selectOption(${i}, ${j})">
-                                <span class="option-marker">${String.fromCharCode(65 + j)}</span>
-                                <span>${opt}</span>
-                            </div>
-                        `).join('')}
-                    </div>
-                </div>
-            `).join('')}
-            <div class="quiz-submit">
-                <button class="btn btn-primary" onclick="submitQuiz()">提交答案</button>
-            </div>
-            <div id="quizResult"></div>
-        </div>
-    `;
-    document.getElementById('moduleContent').innerHTML = quizHTML;
-}
-
-function selectOption(qIndex, oIndex) {
-    const question = document.querySelector(`[data-q="${qIndex}"]`);
-    question.querySelectorAll('.quiz-option').forEach((opt, i) => {
-        opt.classList.toggle('selected', i === oIndex);
-    });
-    question.dataset.selected = oIndex;
-}
-
-function submitQuiz() {
-    const questions = document.querySelectorAll('.quiz-question');
-    let correct = 0;
-    
-    questions.forEach((q, i) => {
-        const selected = parseInt(q.dataset.selected);
-        const isCorrect = selected === currentProject.quiz[i].correct;
-        
-        if (isCorrect) correct++;
-        
-        q.querySelectorAll('.quiz-option').forEach((opt, j) => {
-            if (j === currentProject.quiz[i].correct) opt.classList.add('correct');
-            else if (j === selected && !isCorrect) opt.classList.add('incorrect');
-            opt.style.pointerEvents = 'none';
-        });
-    });
-    
-    const score = Math.round((correct / currentProject.quiz.length) * 100);
-    const passed = score >= 60;
-    
-    progress.quizScores[currentProject.id] = score;
-    
-    if (passed && !progress.completedProjects.includes(currentProject.id)) {
-        progress.completedProjects.push(currentProject.id);
-        unlockAchievement(currentProject.achievement);
-        
-        if (progress.completedProjects.length === 10) {
-            unlockAchievement('all_complete');
-        }
-    }
-    
-    if (score === 100) {
-        unlockAchievement('perfect_quiz');
-    }
-    
-    saveProgress();
-    
-    document.getElementById('quizResult').innerHTML = `
-        <div class="quiz-result">
-            <div class="quiz-score ${passed ? 'pass' : 'fail'}">${score}分</div>
-            <p>${passed ? '🎉 恭喜通过测验！' : '😅 再接再厉！'}</p>
-            <p>正确率: ${correct}/${currentProject.quiz.length}</p>
-        </div>
-    `;
 }
 
 function showAchievements() {
@@ -2517,3 +2912,4 @@ document.addEventListener('DOMContentLoaded', () => {
     </script>
 </body>
 </html>
+<!-- Updated: Thu May  7 09:50:50 UTC 2026 -->
